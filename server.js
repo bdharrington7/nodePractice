@@ -7,11 +7,11 @@ function start(route, handle){
 		console.log("Request for " + pathname + " Recieved");
 		console.log(request.url);
 
-		route(handle, pathname);
 
 		//console.log(request);
 		response.writeHead(200, {"Content-Type": "text/plain"});
-		response.write("Hello world");
+        var cont = route(handle, pathname);
+		response.write(cont);
 		response.end();
 		console.log("served a page");
 	}
