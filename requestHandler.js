@@ -1,19 +1,33 @@
-function start() {
+
+var exec = require("child_process").exec;
+var fs = require("fs");
+
+function start(response) {
     console.log("Request handler 'start' was called.");
     
-    function sleep(ms){
-        var startTime = new Date.getTime();
-        while (new Date.getTime() < startTime + ms);
-    }
+    var content = "empty";
     
-    sleep(10000);
+//    exec("find ~/Downloads",
+//         { timeout: 10000, maxBuffer: 20000*1024 },
+//         function (error, stdout, stderr) {
+//         response.writeHead(200, {"Content-Type": "text/plain"});
+//         response.write(stdout);
+//         response.end();
+//         });
     
-    return "Hello Start";
+    fs.readFile('./start.html', function (err, data){
+                if(err) throw err;
+                response.writeHead(200, {"Content-Type": "text/html"});
+                response.write(data);
+                response.end();
+                });
 }
 
-function upload() {
+function upload(response) {
     console.log("Request handler 'upload' was called.");
-    return "Hello Upload";
+    response.writeHead(200, {"Content-Type": "text/plain"});
+    response.write("Hello Upload");
+    response.end();
 }
 
 exports.start = start;
